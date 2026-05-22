@@ -11,10 +11,20 @@ require_once CURAI_PLUGIN_DIR . 'includes/abilities/trait-curai-ability-helpers.
 require_once CURAI_PLUGIN_DIR . 'includes/ai/class-curai-ai-bridge.php';
 require_once CURAI_PLUGIN_DIR . 'includes/ai/class-curai-prompt-builder.php';
 require_once CURAI_PLUGIN_DIR . 'includes/ai/class-curai-cost-guard.php';
+require_once CURAI_PLUGIN_DIR . 'includes/audit/class-curai-audit-store.php';
+require_once CURAI_PLUGIN_DIR . 'includes/audit/class-curai-readability-calc.php';
+require_once CURAI_PLUGIN_DIR . 'includes/audit/class-curai-link-checker.php';
+require_once CURAI_PLUGIN_DIR . 'includes/audit/class-curai-pagespeed-client.php';
 require_once CURAI_PLUGIN_DIR . 'includes/abilities/class-curai-ability-meta-title.php';
 require_once CURAI_PLUGIN_DIR . 'includes/abilities/class-curai-ability-meta-description.php';
 require_once CURAI_PLUGIN_DIR . 'includes/abilities/class-curai-ability-alt-text.php';
 require_once CURAI_PLUGIN_DIR . 'includes/abilities/class-curai-ability-refresh-content.php';
+require_once CURAI_PLUGIN_DIR . 'includes/abilities/class-curai-ability-audit-stale.php';
+require_once CURAI_PLUGIN_DIR . 'includes/abilities/class-curai-ability-audit-readability.php';
+require_once CURAI_PLUGIN_DIR . 'includes/abilities/class-curai-ability-audit-missing-meta-alt.php';
+require_once CURAI_PLUGIN_DIR . 'includes/abilities/class-curai-ability-audit-thin-content.php';
+require_once CURAI_PLUGIN_DIR . 'includes/abilities/class-curai-ability-audit-broken-links.php';
+require_once CURAI_PLUGIN_DIR . 'includes/abilities/class-curai-ability-audit-perf.php';
 
 /**
  * Hooks the Abilities API and registers every Curator AI category + ability.
@@ -87,6 +97,346 @@ class CURAI_Ability_Registrar {
 		self::register_meta_description();
 		self::register_alt_text();
 		self::register_refresh_content();
+		self::register_audit_stale();
+		self::register_audit_readability();
+		self::register_audit_missing_meta_alt();
+		self::register_audit_thin_content();
+		self::register_audit_broken_links();
+		self::register_audit_perf();
+	}
+
+	/**
+	 * Register `curator-ai/audit-stale`.
+	 *
+	 * @since 1.0.0
+	 * @return void
+	 */
+	private static function register_audit_stale(): void {
+		wp_register_ability(
+			'curator-ai/audit-stale',
+			array(
+				'label'               => __( 'Audit Stale Posts', 'curator-ai' ),
+				'description'         => __( 'Finds published posts older than N months since last modification.', 'curator-ai' ),
+				'category'            => 'audit',
+				'input_schema'        => array(
+					'type'                 => 'object',
+					'properties'           => array(
+						'months'     => array(
+							'type'    => 'integer',
+							'minimum' => 1,
+							'default' => 12,
+						),
+						'post_types' => array(
+							'type'    => 'array',
+							'items'   => array( 'type' => 'string' ),
+							'default' => array( 'post' ),
+						),
+						'limit'      => array(
+							'type'    => 'integer',
+							'minimum' => 1,
+							'maximum' => 1000,
+							'default' => 200,
+						),
+					),
+					'additionalProperties' => false,
+				),
+				'output_schema'       => array(
+					'type'       => 'object',
+					'properties' => array(
+						'posts'  => array( 'type' => 'array' ),
+						'count'  => array( 'type' => 'integer' ),
+						'months' => array( 'type' => 'integer' ),
+					),
+				),
+				'execute_callback'    => array( 'CURAI_Ability_Audit_Stale', 'execute' ),
+				'permission_callback' => static function () {
+					return current_user_can( 'manage_options' );
+				},
+				'meta'                => array(
+					'show_in_rest' => true,
+					'annotations'  => array(
+						'destructive' => false,
+						'idempotent'  => true,
+						'readonly'    => true,
+					),
+				),
+			)
+		);
+	}
+
+	/**
+	 * Register `curator-ai/audit-readability`.
+	 *
+	 * @since 1.0.0
+	 * @return void
+	 */
+	private static function register_audit_readability(): void {
+		wp_register_ability(
+			'curator-ai/audit-readability',
+			array(
+				'label'               => __( 'Audit Readability', 'curator-ai' ),
+				'description'         => __( 'Computes Flesch-Kincaid readability metrics for a single post.', 'curator-ai' ),
+				'category'            => 'audit',
+				'input_schema'        => array(
+					'type'                 => 'object',
+					'properties'           => array(
+						'post_id' => array(
+							'type'    => 'integer',
+							'minimum' => 1,
+						),
+					),
+					'required'             => array( 'post_id' ),
+					'additionalProperties' => false,
+				),
+				'output_schema'       => array(
+					'type'       => 'object',
+					'properties' => array(
+						'flesch_kincaid'   => array( 'type' => 'number' ),
+						'grade'            => array( 'type' => 'number' ),
+						'sentences'        => array( 'type' => 'integer' ),
+						'words'            => array( 'type' => 'integer' ),
+						'syllables'        => array( 'type' => 'integer' ),
+						'avg_sentence_len' => array( 'type' => 'number' ),
+						'passive_ratio'    => array( 'type' => 'number' ),
+					),
+				),
+				'execute_callback'    => array( 'CURAI_Ability_Audit_Readability', 'execute' ),
+				'permission_callback' => static function ( $input ) {
+					$post_id = isset( $input['post_id'] ) ? (int) $input['post_id'] : 0;
+					return $post_id > 0 && current_user_can( 'edit_post', $post_id );
+				},
+				'meta'                => array(
+					'show_in_rest' => true,
+					'annotations'  => array(
+						'destructive' => false,
+						'idempotent'  => true,
+						'readonly'    => true,
+					),
+				),
+			)
+		);
+	}
+
+	/**
+	 * Register `curator-ai/audit-missing-meta-alt`.
+	 *
+	 * @since 1.0.0
+	 * @return void
+	 */
+	private static function register_audit_missing_meta_alt(): void {
+		wp_register_ability(
+			'curator-ai/audit-missing-meta-alt',
+			array(
+				'label'               => __( 'Audit Missing Meta & Alt', 'curator-ai' ),
+				'description'         => __( 'Finds posts missing meta title/description and images missing alt text.', 'curator-ai' ),
+				'category'            => 'audit',
+				'input_schema'        => array(
+					'type'                 => 'object',
+					'properties'           => array(
+						'post_types' => array(
+							'type'    => 'array',
+							'items'   => array( 'type' => 'string' ),
+							'default' => array( 'post', 'page' ),
+						),
+						'limit'      => array(
+							'type'    => 'integer',
+							'minimum' => 1,
+							'maximum' => 5000,
+							'default' => 500,
+						),
+					),
+					'additionalProperties' => false,
+				),
+				'output_schema'       => array(
+					'type'       => 'object',
+					'properties' => array(
+						'missing_meta_title' => array( 'type' => 'array' ),
+						'missing_meta_desc'  => array( 'type' => 'array' ),
+						'missing_alt'        => array( 'type' => 'array' ),
+						'counts'             => array( 'type' => 'object' ),
+					),
+				),
+				'execute_callback'    => array( 'CURAI_Ability_Audit_Missing_Meta_Alt', 'execute' ),
+				'permission_callback' => static function () {
+					return current_user_can( 'manage_options' );
+				},
+				'meta'                => array(
+					'show_in_rest' => true,
+					'annotations'  => array(
+						'destructive' => false,
+						'idempotent'  => true,
+						'readonly'    => true,
+					),
+				),
+			)
+		);
+	}
+
+	/**
+	 * Register `curator-ai/audit-thin-content`.
+	 *
+	 * @since 1.0.0
+	 * @return void
+	 */
+	private static function register_audit_thin_content(): void {
+		wp_register_ability(
+			'curator-ai/audit-thin-content',
+			array(
+				'label'               => __( 'Audit Thin Content', 'curator-ai' ),
+				'description'         => __( 'Flags posts with fewer than N words of plain-text content.', 'curator-ai' ),
+				'category'            => 'audit',
+				'input_schema'        => array(
+					'type'                 => 'object',
+					'properties'           => array(
+						'min_words'  => array(
+							'type'    => 'integer',
+							'minimum' => 50,
+							'default' => 300,
+						),
+						'post_types' => array(
+							'type'    => 'array',
+							'items'   => array( 'type' => 'string' ),
+							'default' => array( 'post' ),
+						),
+						'limit'      => array(
+							'type'    => 'integer',
+							'minimum' => 1,
+							'maximum' => 1000,
+							'default' => 200,
+						),
+					),
+					'additionalProperties' => false,
+				),
+				'output_schema'       => array(
+					'type'       => 'object',
+					'properties' => array(
+						'posts'     => array( 'type' => 'array' ),
+						'count'     => array( 'type' => 'integer' ),
+						'min_words' => array( 'type' => 'integer' ),
+					),
+				),
+				'execute_callback'    => array( 'CURAI_Ability_Audit_Thin_Content', 'execute' ),
+				'permission_callback' => static function () {
+					return current_user_can( 'manage_options' );
+				},
+				'meta'                => array(
+					'show_in_rest' => true,
+					'annotations'  => array(
+						'destructive' => false,
+						'idempotent'  => true,
+						'readonly'    => true,
+					),
+				),
+			)
+		);
+	}
+
+	/**
+	 * Register `curator-ai/audit-broken-links`.
+	 *
+	 * @since 1.0.0
+	 * @return void
+	 */
+	private static function register_audit_broken_links(): void {
+		wp_register_ability(
+			'curator-ai/audit-broken-links',
+			array(
+				'label'               => __( 'Audit Broken Links', 'curator-ai' ),
+				'description'         => __( 'HEAD-checks external links inside a single post (full-site async in Phase 6).', 'curator-ai' ),
+				'category'            => 'audit',
+				'input_schema'        => array(
+					'type'                 => 'object',
+					'properties'           => array(
+						'post_id' => array(
+							'type'    => 'integer',
+							'minimum' => 1,
+						),
+					),
+					'required'             => array( 'post_id' ),
+					'additionalProperties' => false,
+				),
+				'output_schema'       => array(
+					'type'       => 'object',
+					'properties' => array(
+						'post_id'      => array( 'type' => 'integer' ),
+						'count'        => array( 'type' => 'integer' ),
+						'broken_count' => array( 'type' => 'integer' ),
+						'links'        => array( 'type' => 'array' ),
+					),
+				),
+				'execute_callback'    => array( 'CURAI_Ability_Audit_Broken_Links', 'execute' ),
+				'permission_callback' => static function ( $input ) {
+					$post_id = isset( $input['post_id'] ) ? (int) $input['post_id'] : 0;
+					return $post_id > 0 && current_user_can( 'edit_post', $post_id );
+				},
+				'meta'                => array(
+					'show_in_rest' => true,
+					'annotations'  => array(
+						'destructive' => false,
+						'idempotent'  => true,
+						'readonly'    => true,
+					),
+				),
+			)
+		);
+	}
+
+	/**
+	 * Register `curator-ai/audit-perf`.
+	 *
+	 * @since 1.0.0
+	 * @return void
+	 */
+	private static function register_audit_perf(): void {
+		wp_register_ability(
+			'curator-ai/audit-perf',
+			array(
+				'label'               => __( 'Audit Performance', 'curator-ai' ),
+				'description'         => __( 'Runs Google PageSpeed Insights on a URL and returns Core Web Vitals.', 'curator-ai' ),
+				'category'            => 'audit',
+				'input_schema'        => array(
+					'type'                 => 'object',
+					'properties'           => array(
+						'url'      => array(
+							'type'   => 'string',
+							'format' => 'uri',
+						),
+						'strategy' => array(
+							'type'    => 'string',
+							'enum'    => array( 'mobile', 'desktop' ),
+							'default' => 'mobile',
+						),
+					),
+					'additionalProperties' => false,
+				),
+				'output_schema'       => array(
+					'type'       => 'object',
+					'properties' => array(
+						'url'           => array( 'type' => 'string' ),
+						'strategy'      => array( 'type' => 'string' ),
+						'lcp'           => array( 'type' => 'number' ),
+						'cls'           => array( 'type' => 'number' ),
+						'inp'           => array( 'type' => 'number' ),
+						'fcp'           => array( 'type' => 'number' ),
+						'ttfb'          => array( 'type' => 'number' ),
+						'score'         => array( 'type' => 'integer' ),
+						'opportunities' => array( 'type' => 'array' ),
+					),
+				),
+				'execute_callback'    => array( 'CURAI_Ability_Audit_Perf', 'execute' ),
+				'permission_callback' => static function () {
+					return current_user_can( 'manage_options' );
+				},
+				'meta'                => array(
+					'show_in_rest' => true,
+					'annotations'  => array(
+						'destructive' => false,
+						'idempotent'  => true,
+						'readonly'    => true,
+					),
+				),
+			)
+		);
 	}
 
 	/**
