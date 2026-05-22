@@ -28,6 +28,9 @@ if ( ! defined( 'CURAI_PLUGIN_FILE' ) ) {
 if ( ! defined( 'CURAI_DB_VERSION' ) ) {
     define( 'CURAI_DB_VERSION', '1.0.0' );
 }
+if ( ! defined( 'ARRAY_A' ) ) {
+    define( 'ARRAY_A', 'ARRAY_A' );
+}
 if ( ! defined( 'CURAI_MIN_PHP' ) ) {
     define( 'CURAI_MIN_PHP', '8.1' );
 }
