@@ -76,5 +76,10 @@ if ( ! class_exists( 'WP_Post' ) ) {
 		 * @var string
 		 */
 		public string $post_content = '';
+
+		/**
+		 * @var string
+		 */
+		public string $post_modified = '';
 	}
 }

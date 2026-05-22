@@ -37,3 +37,6 @@ if ( ! defined( 'CURAI_MIN_PHP' ) ) {
 if ( ! defined( 'CURAI_MIN_WP' ) ) {
     define( 'CURAI_MIN_WP', '7.0' );
 }
+if ( ! defined( 'DAY_IN_SECONDS' ) ) {
+    define( 'DAY_IN_SECONDS', 86400 );
+}
