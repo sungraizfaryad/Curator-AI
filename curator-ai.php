@@ -6,6 +6,7 @@
  * Version:           1.0.0
  * Requires at least: 7.0
  * Requires PHP:      8.1
+ * Requires Plugins:  ai
  * Author:            Sungraiz
  * Author URI:        https://sungraizfaryad.com/
  * License:           GPL-2.0-or-later

@@ -58,8 +58,46 @@ if ( ! is_array( $curai_recent_findings ) ) {
 	$curai_recent_findings = array();
 }
 ?>
+<?php
+$curai_setup_complete = $curai_ai_status['available'] && $curai_ai_status['plugin_active'] && $curai_ai_status['provider_configured'];
+?>
 <div class="wrap curai-wrap">
 	<h1><?php esc_html_e( 'Curator AI — Overview', 'curator-ai' ); ?></h1>
+
+	<?php if ( ! $curai_setup_complete ) : ?>
+		<div class="curai-card">
+			<h2><?php esc_html_e( 'Getting started', 'curator-ai' ); ?></h2>
+			<p><?php esc_html_e( 'Curator AI uses the official WordPress AI plugin to route prompts to your chosen AI provider. Complete these steps to enable AI generation:', 'curator-ai' ); ?></p>
+			<ol>
+				<li>
+					<?php if ( ! $curai_ai_status['plugin_active'] ) : ?>
+						<strong><?php esc_html_e( 'Install the AI plugin', 'curator-ai' ); ?></strong> —
+						<a href="<?php echo esc_url( wp_nonce_url( self_admin_url( 'update.php?action=install-plugin&plugin=ai' ), 'install-plugin_ai' ) ); ?>"><?php esc_html_e( 'Install now', 'curator-ai' ); ?></a>
+						<?php esc_html_e( '(by WordPress.org, free, ships the AI Client + Abilities APIs).', 'curator-ai' ); ?>
+					<?php else : ?>
+						<strong><?php esc_html_e( 'AI plugin installed and active.', 'curator-ai' ); ?></strong> ✓
+					<?php endif; ?>
+				</li>
+				<li>
+					<?php if ( ! $curai_ai_status['provider_configured'] ) : ?>
+						<strong><?php esc_html_e( 'Configure a provider', 'curator-ai' ); ?></strong> —
+						<a href="<?php echo esc_url( self_admin_url( 'options-connectors.php' ) ); ?>"><?php esc_html_e( 'Open Settings → Connectors', 'curator-ai' ); ?></a>
+						<?php esc_html_e( 'and add an API key for OpenAI, Anthropic, Google, or another supported provider.', 'curator-ai' ); ?>
+					<?php else : ?>
+						<strong><?php esc_html_e( 'Provider configured.', 'curator-ai' ); ?></strong> ✓
+					<?php endif; ?>
+				</li>
+				<li>
+					<?php esc_html_e( 'Test by editing any post and clicking the', 'curator-ai' ); ?>
+					<strong><?php esc_html_e( 'Curator AI', 'curator-ai' ); ?></strong>
+					<?php esc_html_e( 'icon in the editor sidebar — try "Generate Meta Title".', 'curator-ai' ); ?>
+				</li>
+			</ol>
+			<p>
+				<em><?php esc_html_e( 'Audit features (readability, broken links, stale content, etc.) work without the AI plugin — try them now via Bulk Operations.', 'curator-ai' ); ?></em>
+			</p>
+		</div>
+	<?php endif; ?>
 
 	<div class="curai-card">
 		<h2><?php esc_html_e( 'System Status', 'curator-ai' ); ?></h2>

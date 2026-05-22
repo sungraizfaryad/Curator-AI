@@ -86,10 +86,41 @@ class CURAI_AI_Client_Detector {
 			return;
 		}
 
-		$message = esc_html__( 'Curator AI needs the WordPress AI Client plugin active and a provider configured. Audit features still work; AI generation is disabled.', 'curator-ai' );
+		$status = self::get_status();
+		if ( $status['available'] && $status['plugin_active'] && $status['provider_configured'] ) {
+			return;
+		}
+
+		if ( ! $status['plugin_active'] ) {
+			$install_url = wp_nonce_url(
+				self_admin_url( 'update.php?action=install-plugin&plugin=ai' ),
+				'install-plugin_ai'
+			);
+			$message     = sprintf(
+				/* translators: %s: install plugin URL. */
+				__( 'Curator AI requires the official WordPress <strong>AI</strong> plugin. <a href="%s">Install it now</a>. Audit features still work; AI generation is disabled.', 'curator-ai' ),
+				esc_url( $install_url )
+			);
+		} elseif ( ! $status['provider_configured'] ) {
+			$settings_url = self_admin_url( 'options-connectors.php' );
+			$message      = sprintf(
+				/* translators: %s: connectors settings URL. */
+				__( 'Curator AI: AI plugin is active but no provider is configured. <a href="%s">Add a provider in Settings → Connectors</a>. Audit features still work; AI generation is disabled.', 'curator-ai' ),
+				esc_url( $settings_url )
+			);
+		} else {
+			$message = __( 'Curator AI: AI client is not available. Audit features still work; AI generation is disabled.', 'curator-ai' );
+		}
+
 		printf(
 			'<div class="notice notice-warning"><p>%s</p></div>',
-			wp_kses_post( $message )
+			wp_kses(
+				$message,
+				array(
+					'a'      => array( 'href' => array() ),
+					'strong' => array(),
+				)
+			)
 		);
 	}
 }
