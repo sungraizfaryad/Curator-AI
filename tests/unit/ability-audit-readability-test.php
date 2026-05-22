@@ -22,7 +22,7 @@ final class CURAI_Ability_Audit_Readability_Test extends TestCase {
 		Monkey\setUp();
 		Functions\when( 'is_wp_error' )->alias( static fn ( $thing ) => $thing instanceof WP_Error );
 		Functions\when( '__' )->returnArg( 1 );
-		Functions\when( 'wp_strip_all_tags' )->alias( static fn ( $s, $rl = true ) => is_string( $s ) ? strip_tags( $s ) : '' );
+		Functions\when( 'wp_strip_all_tags' )->alias( static fn ( $s, $rl = true ) => is_string( $s ) ? preg_replace( '/<[^>]+>/', '', $s ) : '' );
 		Functions\when( 'strip_shortcodes' )->returnArg( 1 );
 		Functions\when( 'current_time' )->alias( static fn ( $t ) => '2026-05-22 12:00:00' );
 		Functions\when( 'wp_json_encode' )->alias( static fn ( $v ) => json_encode( $v ) );

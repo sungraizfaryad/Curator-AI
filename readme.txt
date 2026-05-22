@@ -32,8 +32,37 @@ All AI calls route through `wp_ai_client_prompt()`. The plugin never stores or t
 1. Install and activate the WordPress AI Client plugin, then configure a provider in Settings → Connectors.
 2. Install Curator AI.
 3. Visit Curator AI → Overview to verify status.
+4. Enable any automation rules at Curator AI → Automation (all rules are OFF by default).
+
+== Frequently Asked Questions ==
+
+= Do I need to provide an API key? =
+
+No. All AI calls go through the WordPress AI Client plugin. You configure the provider once in Settings → Connectors, and Curator AI uses whatever model is configured there.
+
+= Does it work without Yoast or Rank Math? =
+
+Yes. A native fallback adapter stores meta titles and descriptions in plugin-owned post meta keys. If you later activate Yoast or Rank Math, the adapter switches automatically, or you can pin a choice in Settings.
+
+= Is anything sent to a third party? =
+
+Only what you trigger. AI calls send post content to your configured AI provider through the WordPress AI Client. The optional performance audit sends the page URL to Google PageSpeed Insights. Audits that score readability, count words, or check links run locally.
+
+= What about background jobs? =
+
+v1 uses WordPress native cron. A future release will bundle Action Scheduler for higher reliability on low-traffic sites. The `curai_scheduler` filter lets you swap in your own scheduler today.
+
+= How do I add support for AIOSEO or SEOPress? =
+
+Implement `CURAI_SEO_Adapter_Interface` and append your adapter via the `curai_seo_adapters` filter.
 
 == Changelog ==
 
 = 1.0.0 =
 * Initial release.
+* 10 registered abilities: generate-meta-title, generate-meta-description, generate-alt-text, refresh-content, audit-stale, audit-readability, audit-missing-meta-alt, audit-thin-content, audit-broken-links, audit-perf.
+* SEO adapters for Yoast SEO, Rank Math, plus a native fallback.
+* Automation engine with hook-based and scheduled rule support (all OFF by default).
+* REST API under `curator-ai/v1`.
+* Gutenberg sidebar with SEO, Readability, Freshness, and Broken Links panels.
+* Admin dashboard with Overview, Automation, Audit Reports, Bulk Operations, and Settings views.

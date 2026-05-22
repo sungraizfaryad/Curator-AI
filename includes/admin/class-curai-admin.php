@@ -100,7 +100,12 @@ class CURAI_Admin {
 		if ( ! is_string( $hook ) || false === strpos( $hook, 'curator-ai' ) ) {
 			return;
 		}
-		// Phase 1: no assets yet. Hook reserved for later phases.
+		wp_enqueue_style(
+			'curai-admin',
+			CURAI_PLUGIN_URL . 'assets/admin/admin.css',
+			array(),
+			CURAI_VERSION
+		);
 	}
 
 	/**

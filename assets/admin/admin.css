@@ -1,0 +1,19 @@
+.curai-wrap { max-width: 1100px; }
+.curai-wrap h1 { margin-bottom: 1em; }
+.curai-card { background: #fff; border: 1px solid #e2e4e7; border-radius: 4px; padding: 1.5em; margin-bottom: 1.5em; }
+.curai-card h2 { margin-top: 0; }
+.curai-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1em; }
+.curai-stat { background: #f9f9f9; border-radius: 4px; padding: 1em; text-align: center; }
+.curai-stat strong { display: block; font-size: 2em; font-weight: 600; color: #1d2327; }
+.curai-stat span { color: #50575e; font-size: 0.9em; }
+.curai-status-ok { color: #00a32a; font-weight: 600; }
+.curai-status-bad { color: #d63638; font-weight: 600; }
+.curai-table { width: 100%; border-collapse: collapse; }
+.curai-table th, .curai-table td { padding: 0.6em 0.8em; border-bottom: 1px solid #f0f0f1; text-align: left; }
+.curai-table th { background: #f6f7f7; }
+.curai-tabs { border-bottom: 1px solid #c3c4c7; margin-bottom: 1em; }
+.curai-tabs a { display: inline-block; padding: 0.6em 1em; text-decoration: none; }
+.curai-tabs a.current { border-bottom: 3px solid #2271b1; font-weight: 600; }
+.curai-notice { padding: 0.8em 1em; border-left: 4px solid #2271b1; background: #f0f6fc; margin-bottom: 1em; }
+.curai-notice.error { border-color: #d63638; background: #fcf0f1; }
+.curai-notice.success { border-color: #00a32a; background: #f0fbf0; }

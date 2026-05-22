@@ -12,8 +12,11 @@ require_once CURAI_PLUGIN_DIR . 'includes/class-curai-deactivator.php';
 require_once CURAI_PLUGIN_DIR . 'includes/class-curai-i18n.php';
 require_once CURAI_PLUGIN_DIR . 'includes/compat/class-curai-ai-client-detector.php';
 require_once CURAI_PLUGIN_DIR . 'includes/admin/class-curai-admin.php';
+require_once CURAI_PLUGIN_DIR . 'includes/admin/class-curai-admin-actions.php';
 require_once CURAI_PLUGIN_DIR . 'includes/abilities/class-curai-ability-registrar.php';
 require_once CURAI_PLUGIN_DIR . 'includes/automation/class-curai-automation.php';
+require_once CURAI_PLUGIN_DIR . 'includes/rest/class-curai-rest-controller.php';
+require_once CURAI_PLUGIN_DIR . 'includes/editor/class-curai-editor-assets.php';
 
 /**
  * Main plugin orchestrator — singleton that bootstraps all Curator AI functionality.
@@ -61,10 +64,13 @@ final class CURAI_Plugin {
 
 		if ( is_admin() ) {
 			CURAI_Admin::boot();
+			CURAI_Admin_Actions::boot();
 		}
 
 		CURAI_Ability_Registrar::boot();
 		CURAI_Automation::boot();
+		CURAI_Editor_Assets::boot();
+		CURAI_REST_Controller::boot();
 
 		$this->maybe_upgrade();
 	}

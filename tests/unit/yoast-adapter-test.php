@@ -5,6 +5,8 @@
  * @package CuratorAI
  */
 
+defined( 'ABSPATH' ) || exit;
+
 use Brain\Monkey;
 use Brain\Monkey\Functions;
 use PHPUnit\Framework\TestCase;
