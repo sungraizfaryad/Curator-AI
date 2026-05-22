@@ -65,10 +65,11 @@ class CURAI_AI_Client_Detector {
 		if ( ! self::is_available() ) {
 			return false;
 		}
-		if ( function_exists( 'wp_ai_client_is_supported_chat_completion' ) ) {
-			return (bool) wp_ai_client_is_supported_chat_completion();
+		try {
+			return (bool) wp_ai_client_prompt()->is_supported_for_text_generation();
+		} catch ( \Throwable $e ) {
+			return false;
 		}
-		return false;
 	}
 
 	/**
