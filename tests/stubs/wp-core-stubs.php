@@ -81,6 +81,16 @@ if ( ! class_exists( 'WP_Post' ) ) {
 		 * @var string
 		 */
 		public string $post_modified = '';
+
+		/**
+		 * @var string
+		 */
+		public string $post_status = 'publish';
+
+		/**
+		 * @var string
+		 */
+		public string $post_type = 'post';
 	}
 }
 

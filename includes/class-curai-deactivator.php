@@ -55,7 +55,10 @@ class CURAI_Deactivator {
 		$hooks = array(
 			'curai_job_run_ability',
 			'curai_job_bulk_chunk',
+			'curai_job_retry',
 			'curai_job_weekly_audit',
+			'curai_job_stale_check',
+			'curai_job_broken_link_scan',
 		);
 		foreach ( $hooks as $hook ) {
 			wp_clear_scheduled_hook( $hook );
