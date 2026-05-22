@@ -31,7 +31,7 @@ class CURAI_Ability_Meta_Title {
 	 * @since 1.0.0
 	 * @param array $input Validated input. Keys: post_id (int), focus_keyword (string, optional),
 	 *                     max_length (int, default 60).
-	 * @return array|WP_Error On success: `{ title: string, tokens_used: int }`. On failure: WP_Error.
+	 * @return array|WP_Error On success: `{ title: string, tokens_used: int, adapter: string, persistence_error?: string }`. On failure: WP_Error.
 	 */
 	public static function execute( array $input ) {
 		$post_id       = isset( $input['post_id'] ) ? (int) $input['post_id'] : 0;
@@ -70,10 +70,20 @@ class CURAI_Ability_Meta_Title {
 		$tokens_used = (int) ceil( ( strlen( $prompt['user'] ) + strlen( $prompt['system'] ) + strlen( $title ) ) / 4 );
 		CURAI_Cost_Guard::record_usage( $tokens_used, 0.0 );
 
-		return array(
+		$adapter   = CURAI_SEO_Adapter_Factory::get();
+		$persisted = $adapter->write_meta_title( $post_id, $title );
+
+		$response = array(
 			'title'       => $title,
 			'tokens_used' => $tokens_used,
+			'adapter'     => $adapter->get_slug(),
 		);
+
+		if ( ! $persisted ) {
+			$response['persistence_error'] = $adapter->get_slug();
+		}
+
+		return $response;
 	}
 
 	/**

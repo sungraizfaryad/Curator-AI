@@ -29,7 +29,7 @@ class CURAI_Ability_Meta_Description {
 	 * @since 1.0.0
 	 * @param array $input Keys: post_id (int), focus_keyword (string, optional),
 	 *                     max_length (int, default 155).
-	 * @return array|WP_Error On success: `{ description: string, tokens_used: int }`.
+	 * @return array|WP_Error On success: `{ description: string, tokens_used: int, adapter: string, persistence_error?: string }`. On failure: WP_Error.
 	 */
 	public static function execute( array $input ) {
 		$post_id       = isset( $input['post_id'] ) ? (int) $input['post_id'] : 0;
@@ -67,10 +67,20 @@ class CURAI_Ability_Meta_Description {
 		$tokens_used = (int) ceil( ( strlen( $prompt['user'] ) + strlen( $prompt['system'] ) + strlen( $description ) ) / 4 );
 		CURAI_Cost_Guard::record_usage( $tokens_used, 0.0 );
 
-		return array(
+		$adapter   = CURAI_SEO_Adapter_Factory::get();
+		$persisted = $adapter->write_meta_description( $post_id, $description );
+
+		$response = array(
 			'description' => $description,
 			'tokens_used' => $tokens_used,
+			'adapter'     => $adapter->get_slug(),
 		);
+
+		if ( ! $persisted ) {
+			$response['persistence_error'] = $adapter->get_slug();
+		}
+
+		return $response;
 	}
 
 	/**

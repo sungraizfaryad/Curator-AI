@@ -14,6 +14,11 @@ require_once dirname( __DIR__, 2 ) . '/includes/abilities/trait-curai-ability-he
 require_once dirname( __DIR__, 2 ) . '/includes/ai/class-curai-ai-bridge.php';
 require_once dirname( __DIR__, 2 ) . '/includes/ai/class-curai-prompt-builder.php';
 require_once dirname( __DIR__, 2 ) . '/includes/ai/class-curai-cost-guard.php';
+require_once dirname( __DIR__, 2 ) . '/includes/seo-adapters/interface-curai-seo-adapter.php';
+require_once dirname( __DIR__, 2 ) . '/includes/seo-adapters/class-curai-native-seo-adapter.php';
+require_once dirname( __DIR__, 2 ) . '/includes/seo-adapters/class-curai-yoast-seo-adapter.php';
+require_once dirname( __DIR__, 2 ) . '/includes/seo-adapters/class-curai-rank-math-seo-adapter.php';
+require_once dirname( __DIR__, 2 ) . '/includes/seo-adapters/class-curai-seo-adapter-factory.php';
 require_once dirname( __DIR__, 2 ) . '/includes/abilities/class-curai-ability-meta-title.php';
 
 final class CURAI_Ability_Meta_Title_Test extends TestCase {
@@ -40,9 +45,12 @@ final class CURAI_Ability_Meta_Title_Test extends TestCase {
 			return $default;
 		} );
 		Functions\when( 'update_option' )->justReturn( true );
+		Functions\when( 'apply_filters' )->returnArg( 2 );
+		CURAI_SEO_Adapter_Factory::reset();
 	}
 
 	protected function tearDown(): void {
+		CURAI_SEO_Adapter_Factory::reset();
 		Monkey\tearDown();
 		parent::tearDown();
 	}
