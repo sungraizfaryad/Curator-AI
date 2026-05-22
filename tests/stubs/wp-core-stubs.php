@@ -83,3 +83,11 @@ if ( ! class_exists( 'WP_Post' ) ) {
 		public string $post_modified = '';
 	}
 }
+
+if ( ! class_exists( 'RankMath' ) ) {
+	/**
+	 * Minimal RankMath stub so the Rank Math adapter's is_active() check
+	 * returns true in unit tests without requiring the real plugin.
+	 */
+	class RankMath {}
+}
