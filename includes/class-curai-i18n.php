@@ -1,6 +1,6 @@
 <?php
 /**
- * Loads plugin text domain.
+ * Plugin text domain handler.
  *
  * @package CuratorAI
  */
@@ -8,23 +8,23 @@
 defined( 'ABSPATH' ) || exit;
 
 /**
- * Handles loading of the plugin text domain for translations.
+ * Handles plugin text domain registration.
+ *
+ * WordPress.org auto-loads translations for WP.org-hosted plugins since WP 4.6,
+ * so no manual load_plugin_textdomain() call is needed. Class kept as a hook
+ * surface for any future locale-related setup.
  *
  * @since 1.0.0
  */
 class CURAI_I18n {
 
 	/**
-	 * Loads the plugin text domain from the languages directory.
+	 * Placeholder hook callback. Translations auto-load on WP.org-hosted plugins.
 	 *
 	 * @since 1.0.0
 	 * @return void
 	 */
 	public static function load(): void {
-		load_plugin_textdomain(
-			'curator-ai',
-			false,
-			dirname( CURAI_PLUGIN_BASE ) . '/languages/'
-		);
+		// Intentionally empty: WP 4.6+ auto-loads translations for WP.org-hosted plugins.
 	}
 }

@@ -12,27 +12,26 @@
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
  * Text Domain:       curator-ai
  * Domain Path:       /languages
- * Network:           false
  *
  * @package CuratorAI
  */
 
 defined( 'ABSPATH' ) || exit;
 
-define( 'CURAI_VERSION',     '1.0.0' );
+define( 'CURAI_VERSION', '1.0.0' );
 define( 'CURAI_PLUGIN_FILE', __FILE__ );
-define( 'CURAI_PLUGIN_DIR',  plugin_dir_path( __FILE__ ) );
-define( 'CURAI_PLUGIN_URL',  plugin_dir_url( __FILE__ ) );
+define( 'CURAI_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
+define( 'CURAI_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 define( 'CURAI_PLUGIN_BASE', plugin_basename( __FILE__ ) );
-define( 'CURAI_DB_VERSION',  '1.0.0' );
-define( 'CURAI_MIN_PHP',     '8.1' );
-define( 'CURAI_MIN_WP',      '7.0' );
+define( 'CURAI_DB_VERSION', '1.0.0' );
+define( 'CURAI_MIN_PHP', '8.1' );
+define( 'CURAI_MIN_WP', '7.0' );
 
 require_once CURAI_PLUGIN_DIR . 'includes/compat/class-curai-environment-check.php';
 
 if ( ! CURAI_Environment_Check::passes() ) {
-    add_action( 'admin_notices', array( 'CURAI_Environment_Check', 'render_failure_notice' ) );
-    return;
+	add_action( 'admin_notices', array( 'CURAI_Environment_Check', 'render_failure_notice' ) );
+	return;
 }
 
 require_once CURAI_PLUGIN_DIR . 'includes/class-curai-plugin.php';
