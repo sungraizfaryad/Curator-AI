@@ -14,20 +14,59 @@ require_once CURAI_PLUGIN_DIR . 'includes/ai/class-curai-cost-guard.php';
 require_once CURAI_PLUGIN_DIR . 'includes/abilities/class-curai-ability-meta-title.php';
 
 /**
- * Hooks `wp_abilities_api_init` and registers every Curator AI ability.
+ * Hooks the Abilities API and registers every Curator AI category + ability.
  *
  * @since 1.0.0
  */
 class CURAI_Ability_Registrar {
 
 	/**
-	 * Register the Abilities API hook.
+	 * Register the Abilities API hooks (categories first, then abilities).
 	 *
 	 * @since 1.0.0
 	 * @return void
 	 */
 	public static function boot(): void {
+		add_action( 'wp_abilities_api_categories_init', array( __CLASS__, 'register_categories' ) );
 		add_action( 'wp_abilities_api_init', array( __CLASS__, 'register_all' ) );
+	}
+
+	/**
+	 * Register Curator AI ability categories.
+	 *
+	 * Categories must exist before any ability referencing them can register.
+	 *
+	 * @since 1.0.0
+	 * @return void
+	 */
+	public static function register_categories(): void {
+		if ( ! function_exists( 'wp_register_ability_category' ) ) {
+			return;
+		}
+
+		wp_register_ability_category(
+			'seo',
+			array(
+				'label'       => __( 'SEO', 'curator-ai' ),
+				'description' => __( 'SEO meta and alt text generation abilities.', 'curator-ai' ),
+			)
+		);
+
+		wp_register_ability_category(
+			'freshness',
+			array(
+				'label'       => __( 'Content Freshness', 'curator-ai' ),
+				'description' => __( 'Detect stale content and refresh dates or rewrite outdated content.', 'curator-ai' ),
+			)
+		);
+
+		wp_register_ability_category(
+			'audit',
+			array(
+				'label'       => __( 'Site Audit', 'curator-ai' ),
+				'description' => __( 'Readability, missing meta, broken links, thin content and performance audits.', 'curator-ai' ),
+			)
+		);
 	}
 
 	/**
