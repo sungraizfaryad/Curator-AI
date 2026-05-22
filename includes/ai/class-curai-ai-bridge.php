@@ -92,6 +92,56 @@ class CURAI_AI_Bridge {
 	}
 
 	/**
+	 * Generate text from a prompt that includes an image (multimodal).
+	 *
+	 * @since 1.0.0
+	 * @param string $user_prompt        User-facing prompt text.
+	 * @param string $system_instruction System role instruction.
+	 * @param string $image_path_or_url  Absolute image path or URL.
+	 * @param string $mime_type          MIME type, e.g. 'image/jpeg'.
+	 * @param array  $options            Optional. Keys: max_tokens (int, default 128),
+	 *                                   temperature (float, default 0.5).
+	 * @return string|WP_Error
+	 */
+	public static function generate_text_with_image( string $user_prompt, string $system_instruction, string $image_path_or_url, string $mime_type, array $options = array() ) {
+		if ( ! self::is_available() ) {
+			return new WP_Error(
+				'curai_ai_unavailable',
+				__( 'WordPress AI Client is not available in this WordPress version.', 'curator-ai' )
+			);
+		}
+
+		$max_tokens  = isset( $options['max_tokens'] ) ? (int) $options['max_tokens'] : 128;
+		$temperature = isset( $options['temperature'] ) ? (float) $options['temperature'] : 0.5;
+
+		try {
+			$builder = wp_ai_client_prompt( $user_prompt )->with_file( $image_path_or_url, $mime_type );
+			if ( '' !== $system_instruction ) {
+				$builder = $builder->using_system_instruction( $system_instruction );
+			}
+			$result = $builder
+				->using_max_tokens( $max_tokens )
+				->using_temperature( $temperature )
+				->generate_text();
+		} catch ( \Throwable $e ) {
+			return new WP_Error( 'curai_ai_exception', $e->getMessage() );
+		}
+
+		if ( is_wp_error( $result ) ) {
+			return self::wrap_error( $result );
+		}
+
+		if ( ! is_string( $result ) ) {
+			return new WP_Error(
+				'curai_ai_unexpected_response',
+				__( 'AI Client returned an unexpected response type.', 'curator-ai' )
+			);
+		}
+
+		return trim( $result );
+	}
+
+	/**
 	 * Normalize a core WP_Error into a Curator AI-coded WP_Error.
 	 *
 	 * @since 1.0.0
