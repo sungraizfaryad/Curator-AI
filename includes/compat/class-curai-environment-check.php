@@ -58,7 +58,7 @@ class CURAI_Environment_Check {
 		if ( ! self::php_ok() ) {
 			$messages[] = sprintf(
 				/* translators: 1: required PHP version, 2: current PHP version. */
-				esc_html__( 'Curator AI requires PHP %1$s or higher. You are running %2$s.', 'curator-ai' ),
+				esc_html__( 'Curator AI requires PHP %1$s or higher. You are running %2$s.', 'curator-ai-seo-site-care' ),
 				esc_html( CURAI_MIN_PHP ),
 				esc_html( PHP_VERSION )
 			);
@@ -66,7 +66,7 @@ class CURAI_Environment_Check {
 		if ( ! self::wp_ok() ) {
 			$messages[] = sprintf(
 				/* translators: 1: required WP version, 2: current WP version. */
-				esc_html__( 'Curator AI requires WordPress %1$s or higher. You are running %2$s.', 'curator-ai' ),
+				esc_html__( 'Curator AI requires WordPress %1$s or higher. You are running %2$s.', 'curator-ai-seo-site-care' ),
 				esc_html( CURAI_MIN_WP ),
 				esc_html( $wp_version )
 			);
@@ -74,7 +74,7 @@ class CURAI_Environment_Check {
 
 		printf(
 			'<div class="notice notice-error"><p><strong>%s</strong><br>%s</p></div>',
-			esc_html__( 'Curator AI is inactive.', 'curator-ai' ),
+			esc_html__( 'Curator AI is inactive.', 'curator-ai-seo-site-care' ),
 			wp_kses_post( implode( '<br>', $messages ) )
 		);
 	}

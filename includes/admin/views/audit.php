@@ -13,16 +13,16 @@ global $wpdb;
 $curai_notice_code = isset( $_GET['curai_notice'] ) ? sanitize_text_field( wp_unslash( $_GET['curai_notice'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 if ( $curai_notice_code ) {
 	$curai_notice_map = array(
-		'settings_saved'    => array( 'success', __( 'Settings saved.', 'curator-ai' ) ),
-		'automation_saved'  => array( 'success', __( 'Automation rules saved.', 'curator-ai' ) ),
-		'no_abilities_api'  => array( 'error', __( 'Abilities API unavailable — install/activate WordPress 7.0 AI Client.', 'curator-ai' ) ),
-		'invalid_ability'   => array( 'error', __( 'Invalid ability requested.', 'curator-ai' ) ),
-		'ability_not_found' => array( 'error', __( 'Ability not registered.', 'curator-ai' ) ),
+		'settings_saved'    => array( 'success', __( 'Settings saved.', 'curator-ai-seo-site-care' ) ),
+		'automation_saved'  => array( 'success', __( 'Automation rules saved.', 'curator-ai-seo-site-care' ) ),
+		'no_abilities_api'  => array( 'error', __( 'Abilities API unavailable — install/activate WordPress 7.0 AI Client.', 'curator-ai-seo-site-care' ) ),
+		'invalid_ability'   => array( 'error', __( 'Invalid ability requested.', 'curator-ai-seo-site-care' ) ),
+		'ability_not_found' => array( 'error', __( 'Ability not registered.', 'curator-ai-seo-site-care' ) ),
 	);
 	if ( 0 === strpos( $curai_notice_code, 'bulk_ran_' ) ) {
-		echo '<div class="curai-notice success">' . esc_html( sprintf( /* translators: %s: ability slug */ __( 'Ran %s.', 'curator-ai' ), substr( $curai_notice_code, 9 ) ) ) . '</div>';
+		echo '<div class="curai-notice success">' . esc_html( sprintf( /* translators: %s: ability slug */ __( 'Ran %s.', 'curator-ai-seo-site-care' ), substr( $curai_notice_code, 9 ) ) ) . '</div>';
 	} elseif ( 0 === strpos( $curai_notice_code, 'bulk_error_' ) ) {
-		echo '<div class="curai-notice error">' . esc_html( sprintf( /* translators: %s: error code */ __( 'Error: %s', 'curator-ai' ), substr( $curai_notice_code, 11 ) ) ) . '</div>';
+		echo '<div class="curai-notice error">' . esc_html( sprintf( /* translators: %s: error code */ __( 'Error: %s', 'curator-ai-seo-site-care' ), substr( $curai_notice_code, 11 ) ) ) . '</div>';
 	} elseif ( isset( $curai_notice_map[ $curai_notice_code ] ) ) {
 		$curai_notice_class = $curai_notice_map[ $curai_notice_code ][0];
 		$curai_notice_msg   = $curai_notice_map[ $curai_notice_code ][1];
@@ -31,13 +31,13 @@ if ( $curai_notice_code ) {
 }
 
 $curai_audit_tabs = array(
-	''             => __( 'All', 'curator-ai' ),
-	'stale'        => __( 'Stale', 'curator-ai' ),
-	'readability'  => __( 'Readability', 'curator-ai' ),
-	'missing-meta' => __( 'Missing Meta', 'curator-ai' ),
-	'thin-content' => __( 'Thin Content', 'curator-ai' ),
-	'broken-links' => __( 'Broken Links', 'curator-ai' ),
-	'performance'  => __( 'Performance', 'curator-ai' ),
+	''             => __( 'All', 'curator-ai-seo-site-care' ),
+	'stale'        => __( 'Stale', 'curator-ai-seo-site-care' ),
+	'readability'  => __( 'Readability', 'curator-ai-seo-site-care' ),
+	'missing-meta' => __( 'Missing Meta', 'curator-ai-seo-site-care' ),
+	'thin-content' => __( 'Thin Content', 'curator-ai-seo-site-care' ),
+	'broken-links' => __( 'Broken Links', 'curator-ai-seo-site-care' ),
+	'performance'  => __( 'Performance', 'curator-ai-seo-site-care' ),
 );
 
 $curai_audit_abilities = array(
@@ -74,7 +74,7 @@ if ( ! is_array( $curai_audit_rows ) ) {
 $curai_current_url = add_query_arg( array( 'page' => 'curator-ai-audit' ), admin_url( 'admin.php' ) );
 ?>
 <div class="wrap curai-wrap">
-	<h1><?php esc_html_e( 'Curator AI — Audit Reports', 'curator-ai' ); ?></h1>
+	<h1><?php esc_html_e( 'Curator AI — Audit Reports', 'curator-ai-seo-site-care' ); ?></h1>
 
 	<div class="curai-tabs">
 		<?php foreach ( $curai_audit_tabs as $curai_tab_type => $curai_tab_label ) : ?>
@@ -95,7 +95,7 @@ $curai_current_url = add_query_arg( array( 'page' => 'curator-ai-audit' ), admin
 				echo esc_html(
 					sprintf(
 						/* translators: %s: audit type label */
-						__( 'Run %s audit now', 'curator-ai' ),
+						__( 'Run %s audit now', 'curator-ai-seo-site-care' ),
 						$curai_audit_tabs[ $curai_active_type ]
 					)
 				);
@@ -106,17 +106,17 @@ $curai_current_url = add_query_arg( array( 'page' => 'curator-ai-audit' ), admin
 
 	<div class="curai-card">
 		<?php if ( empty( $curai_audit_rows ) ) : ?>
-			<p><?php esc_html_e( 'No audit results yet. Run a bulk audit to populate findings.', 'curator-ai' ); ?></p>
+			<p><?php esc_html_e( 'No audit results yet. Run a bulk audit to populate findings.', 'curator-ai-seo-site-care' ); ?></p>
 		<?php else : ?>
 			<table class="curai-table">
 				<thead>
 					<tr>
-						<th><?php esc_html_e( 'Detected', 'curator-ai' ); ?></th>
-						<th><?php esc_html_e( 'Type', 'curator-ai' ); ?></th>
-						<th><?php esc_html_e( 'Object ID', 'curator-ai' ); ?></th>
-						<th><?php esc_html_e( 'Severity', 'curator-ai' ); ?></th>
-						<th><?php esc_html_e( 'Resolved', 'curator-ai' ); ?></th>
-						<th><?php esc_html_e( 'Data preview', 'curator-ai' ); ?></th>
+						<th><?php esc_html_e( 'Detected', 'curator-ai-seo-site-care' ); ?></th>
+						<th><?php esc_html_e( 'Type', 'curator-ai-seo-site-care' ); ?></th>
+						<th><?php esc_html_e( 'Object ID', 'curator-ai-seo-site-care' ); ?></th>
+						<th><?php esc_html_e( 'Severity', 'curator-ai-seo-site-care' ); ?></th>
+						<th><?php esc_html_e( 'Resolved', 'curator-ai-seo-site-care' ); ?></th>
+						<th><?php esc_html_e( 'Data preview', 'curator-ai-seo-site-care' ); ?></th>
 					</tr>
 				</thead>
 				<tbody>
@@ -134,9 +134,9 @@ $curai_current_url = add_query_arg( array( 'page' => 'curator-ai-audit' ), admin
 							<td><?php echo esc_html( (string) $curai_audit_row['severity'] ); ?></td>
 							<td>
 								<?php if ( ! empty( $curai_audit_row['resolved_at'] ) ) : ?>
-									<span class="curai-status-ok"><?php esc_html_e( 'Yes', 'curator-ai' ); ?></span>
+									<span class="curai-status-ok"><?php esc_html_e( 'Yes', 'curator-ai-seo-site-care' ); ?></span>
 								<?php else : ?>
-									<span class="curai-status-bad"><?php esc_html_e( 'No', 'curator-ai' ); ?></span>
+									<span class="curai-status-bad"><?php esc_html_e( 'No', 'curator-ai-seo-site-care' ); ?></span>
 								<?php endif; ?>
 							</td>
 							<td><code><?php echo esc_html( $curai_data_preview ); ?></code></td>

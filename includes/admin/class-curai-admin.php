@@ -34,55 +34,55 @@ class CURAI_Admin {
 	 */
 	public static function register_menus(): void {
 		add_menu_page(
-			esc_html__( 'Curator AI', 'curator-ai' ),
-			esc_html__( 'Curator AI', 'curator-ai' ),
+			esc_html__( 'Curator AI', 'curator-ai-seo-site-care' ),
+			esc_html__( 'Curator AI', 'curator-ai-seo-site-care' ),
 			'manage_options',
-			'curator-ai',
+			'curator-ai-seo-site-care',
 			array( __CLASS__, 'render_overview' ),
 			'dashicons-superhero',
 			58
 		);
 
 		add_submenu_page(
-			'curator-ai',
-			esc_html__( 'Overview', 'curator-ai' ),
-			esc_html__( 'Overview', 'curator-ai' ),
+			'curator-ai-seo-site-care',
+			esc_html__( 'Overview', 'curator-ai-seo-site-care' ),
+			esc_html__( 'Overview', 'curator-ai-seo-site-care' ),
 			'manage_options',
-			'curator-ai',
+			'curator-ai-seo-site-care',
 			array( __CLASS__, 'render_overview' )
 		);
 
 		add_submenu_page(
-			'curator-ai',
-			esc_html__( 'Automation', 'curator-ai' ),
-			esc_html__( 'Automation', 'curator-ai' ),
+			'curator-ai-seo-site-care',
+			esc_html__( 'Automation', 'curator-ai-seo-site-care' ),
+			esc_html__( 'Automation', 'curator-ai-seo-site-care' ),
 			'manage_options',
 			'curator-ai-automation',
 			array( __CLASS__, 'render_automation' )
 		);
 
 		add_submenu_page(
-			'curator-ai',
-			esc_html__( 'Audit Reports', 'curator-ai' ),
-			esc_html__( 'Audit Reports', 'curator-ai' ),
+			'curator-ai-seo-site-care',
+			esc_html__( 'Audit Reports', 'curator-ai-seo-site-care' ),
+			esc_html__( 'Audit Reports', 'curator-ai-seo-site-care' ),
 			'manage_options',
 			'curator-ai-audit',
 			array( __CLASS__, 'render_audit' )
 		);
 
 		add_submenu_page(
-			'curator-ai',
-			esc_html__( 'Bulk Operations', 'curator-ai' ),
-			esc_html__( 'Bulk Operations', 'curator-ai' ),
+			'curator-ai-seo-site-care',
+			esc_html__( 'Bulk Operations', 'curator-ai-seo-site-care' ),
+			esc_html__( 'Bulk Operations', 'curator-ai-seo-site-care' ),
 			'manage_options',
 			'curator-ai-bulk',
 			array( __CLASS__, 'render_bulk' )
 		);
 
 		add_submenu_page(
-			'curator-ai',
-			esc_html__( 'Settings', 'curator-ai' ),
-			esc_html__( 'Settings', 'curator-ai' ),
+			'curator-ai-seo-site-care',
+			esc_html__( 'Settings', 'curator-ai-seo-site-care' ),
+			esc_html__( 'Settings', 'curator-ai-seo-site-care' ),
 			'manage_options',
 			'curator-ai-settings',
 			array( __CLASS__, 'render_settings' )
@@ -97,7 +97,7 @@ class CURAI_Admin {
 	 * @return void
 	 */
 	public static function enqueue_assets( string $hook ): void {
-		if ( ! is_string( $hook ) || false === strpos( $hook, 'curator-ai' ) ) {
+		if ( ! is_string( $hook ) || false === strpos( $hook, 'curator-ai-seo-site-care' ) ) {
 			return;
 		}
 		wp_enqueue_style(

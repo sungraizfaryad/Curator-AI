@@ -29,7 +29,7 @@ class CURAI_Ability_Audit_Perf {
 			return new WP_Error(
 				'curai_invalid_url',
 				/* translators: %s: URL value */
-				sprintf( __( 'Invalid URL for performance audit: %s', 'curator-ai' ), $url )
+				sprintf( __( 'Invalid URL for performance audit: %s', 'curator-ai-seo-site-care' ), $url )
 			);
 		}
 

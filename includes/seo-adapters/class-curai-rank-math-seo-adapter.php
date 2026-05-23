@@ -67,7 +67,7 @@ final class CURAI_Rank_Math_SEO_Adapter implements CURAI_SEO_Adapter_Interface {
 	 * @return string
 	 */
 	public function get_label(): string {
-		return __( 'Rank Math', 'curator-ai' );
+		return __( 'Rank Math', 'curator-ai-seo-site-care' );
 	}
 
 	/**

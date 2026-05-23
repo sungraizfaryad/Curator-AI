@@ -44,7 +44,7 @@ class CURAI_Ability_Alt_Text {
 			return new WP_Error(
 				'curai_attachment_not_found',
 				/* translators: %d: attachment ID */
-				sprintf( __( 'Attachment %d not found.', 'curator-ai' ), $attachment_id )
+				sprintf( __( 'Attachment %d not found.', 'curator-ai-seo-site-care' ), $attachment_id )
 			);
 		}
 
@@ -52,7 +52,7 @@ class CURAI_Ability_Alt_Text {
 			return new WP_Error(
 				'curai_attachment_not_image',
 				/* translators: %s: mime type */
-				sprintf( __( 'Attachment is not an image (mime: %s).', 'curator-ai' ), (string) get_post_mime_type( $attachment_id ) )
+				sprintf( __( 'Attachment is not an image (mime: %s).', 'curator-ai-seo-site-care' ), (string) get_post_mime_type( $attachment_id ) )
 			);
 		}
 

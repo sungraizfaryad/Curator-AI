@@ -27,7 +27,7 @@ trait CURAI_Ability_Helpers {
 			return new WP_Error(
 				'curai_post_not_found',
 				/* translators: %d: post ID */
-				sprintf( __( 'Post %d not found.', 'curator-ai' ), $post_id )
+				sprintf( __( 'Post %d not found.', 'curator-ai-seo-site-care' ), $post_id )
 			);
 		}
 		return $post;

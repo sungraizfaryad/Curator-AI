@@ -40,7 +40,7 @@ class CURAI_Cost_Guard {
 				'curai_budget_exceeded',
 				sprintf(
 					/* translators: 1: spent USD, 2: cap USD */
-					__( 'Monthly AI budget exceeded: $%1$.2f of $%2$.2f used.', 'curator-ai' ),
+					__( 'Monthly AI budget exceeded: $%1$.2f of $%2$.2f used.', 'curator-ai-seo-site-care' ),
 					(float) $usage['cost_usd'],
 					$cap
 				)

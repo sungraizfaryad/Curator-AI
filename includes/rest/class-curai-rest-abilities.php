@@ -158,7 +158,7 @@ final class CURAI_REST_Abilities {
 		if ( ! function_exists( 'wp_get_ability' ) ) {
 			return new WP_Error(
 				'curai_no_abilities_api',
-				__( 'Abilities API not available.', 'curator-ai' ),
+				__( 'Abilities API not available.', 'curator-ai-seo-site-care' ),
 				array( 'status' => 503 )
 			);
 		}
@@ -170,7 +170,7 @@ final class CURAI_REST_Abilities {
 			return new WP_Error(
 				'curai_ability_not_found',
 				/* translators: %s: ability ID */
-				sprintf( __( 'Ability %s not found.', 'curator-ai' ), esc_html( $id ) ),
+				sprintf( __( 'Ability %s not found.', 'curator-ai-seo-site-care' ), esc_html( $id ) ),
 				array( 'status' => 404 )
 			);
 		}
@@ -219,7 +219,7 @@ final class CURAI_REST_Abilities {
 		if ( ! function_exists( 'wp_get_ability' ) ) {
 			return new WP_Error(
 				'curai_no_abilities_api',
-				__( 'Abilities API not available.', 'curator-ai' ),
+				__( 'Abilities API not available.', 'curator-ai-seo-site-care' ),
 				array( 'status' => 503 )
 			);
 		}
@@ -231,7 +231,7 @@ final class CURAI_REST_Abilities {
 			return new WP_Error(
 				'curai_ability_not_found',
 				/* translators: %s: ability ID */
-				sprintf( __( 'Ability %s not found.', 'curator-ai' ), esc_html( $id ) ),
+				sprintf( __( 'Ability %s not found.', 'curator-ai-seo-site-care' ), esc_html( $id ) ),
 				array( 'status' => 404 )
 			);
 		}

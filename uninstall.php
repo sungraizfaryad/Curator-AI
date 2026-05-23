@@ -66,7 +66,7 @@ $curai_uninstall_site = static function () use ( $wpdb ) {
 	}
 	if ( function_exists( 'as_unschedule_all_actions' ) ) {
 		foreach ( $hooks as $hook ) {
-			as_unschedule_all_actions( $hook, array(), 'curator-ai' );
+			as_unschedule_all_actions( $hook, array(), 'curator-ai-seo-site-care' );
 		}
 	}
 };

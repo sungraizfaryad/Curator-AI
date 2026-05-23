@@ -67,7 +67,7 @@ final class CURAI_Yoast_SEO_Adapter implements CURAI_SEO_Adapter_Interface {
 	 * @return string
 	 */
 	public function get_label(): string {
-		return __( 'Yoast SEO', 'curator-ai' );
+		return __( 'Yoast SEO', 'curator-ai-seo-site-care' );
 	}
 
 	/**

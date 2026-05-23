@@ -57,7 +57,7 @@ class CURAI_AI_Bridge {
 		if ( ! self::is_available() ) {
 			return new WP_Error(
 				'curai_ai_unavailable',
-				__( 'WordPress AI Client is not available in this WordPress version.', 'curator-ai' )
+				__( 'WordPress AI Client is not available in this WordPress version.', 'curator-ai-seo-site-care' )
 			);
 		}
 
@@ -84,7 +84,7 @@ class CURAI_AI_Bridge {
 		if ( ! is_string( $result ) ) {
 			return new WP_Error(
 				'curai_ai_unexpected_response',
-				__( 'AI Client returned an unexpected response type.', 'curator-ai' )
+				__( 'AI Client returned an unexpected response type.', 'curator-ai-seo-site-care' )
 			);
 		}
 
@@ -107,7 +107,7 @@ class CURAI_AI_Bridge {
 		if ( ! self::is_available() ) {
 			return new WP_Error(
 				'curai_ai_unavailable',
-				__( 'WordPress AI Client is not available in this WordPress version.', 'curator-ai' )
+				__( 'WordPress AI Client is not available in this WordPress version.', 'curator-ai-seo-site-care' )
 			);
 		}
 
@@ -134,7 +134,7 @@ class CURAI_AI_Bridge {
 		if ( ! is_string( $result ) ) {
 			return new WP_Error(
 				'curai_ai_unexpected_response',
-				__( 'AI Client returned an unexpected response type.', 'curator-ai' )
+				__( 'AI Client returned an unexpected response type.', 'curator-ai-seo-site-care' )
 			);
 		}
 

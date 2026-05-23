@@ -67,7 +67,7 @@ class CURAI_Deactivator {
 		// Action Scheduler hooks (cleaned if AS already active).
 		if ( function_exists( 'as_unschedule_all_actions' ) ) {
 			foreach ( $hooks as $hook ) {
-				as_unschedule_all_actions( $hook, array(), 'curator-ai' );
+				as_unschedule_all_actions( $hook, array(), 'curator-ai-seo-site-care' );
 			}
 		}
 	}

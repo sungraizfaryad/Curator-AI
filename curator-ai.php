@@ -1,7 +1,6 @@
 <?php
 /**
- * Plugin Name:       Curator AI
- * Plugin URI:        https://wordpress.org/plugins/curator-ai/
+ * Plugin Name:       Curator AI — SEO & Site Care
  * Description:       AI-powered site care: SEO meta + alt text generation, content freshness, site audits. Uses WordPress 7.0 AI Client + Abilities API.
  * Version:           1.0.0
  * Requires at least: 7.0
@@ -11,7 +10,7 @@
  * Author URI:        https://sungraizfaryad.com/
  * License:           GPL-2.0-or-later
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
- * Text Domain:       curator-ai
+ * Text Domain:       curator-ai-seo-site-care
  * Domain Path:       /languages
  *
  * @package CuratorAI

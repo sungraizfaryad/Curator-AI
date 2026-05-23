@@ -41,7 +41,7 @@ final class CURAI_Admin_Actions {
 	 */
 	public static function handle_save_automation(): void {
 		if ( ! current_user_can( 'manage_options' ) ) {
-			wp_die( esc_html__( 'You do not have permission to perform this action.', 'curator-ai' ) );
+			wp_die( esc_html__( 'You do not have permission to perform this action.', 'curator-ai-seo-site-care' ) );
 		}
 
 		check_admin_referer( 'curai_save_automation' );
@@ -82,7 +82,7 @@ final class CURAI_Admin_Actions {
 	 */
 	public static function handle_save_settings(): void {
 		if ( ! current_user_can( 'manage_options' ) ) {
-			wp_die( esc_html__( 'You do not have permission to perform this action.', 'curator-ai' ) );
+			wp_die( esc_html__( 'You do not have permission to perform this action.', 'curator-ai-seo-site-care' ) );
 		}
 
 		check_admin_referer( 'curai_save_settings' );
@@ -132,7 +132,7 @@ final class CURAI_Admin_Actions {
 	 */
 	public static function handle_run_bulk_audit(): void {
 		if ( ! current_user_can( 'manage_options' ) ) {
-			wp_die( esc_html__( 'You do not have permission to perform this action.', 'curator-ai' ) );
+			wp_die( esc_html__( 'You do not have permission to perform this action.', 'curator-ai-seo-site-care' ) );
 		}
 
 		check_admin_referer( 'curai_run_bulk_audit' );

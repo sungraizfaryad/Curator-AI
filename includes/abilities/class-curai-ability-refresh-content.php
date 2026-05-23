@@ -50,7 +50,7 @@ class CURAI_Ability_Refresh_Content {
 			return new WP_Error(
 				'curai_invalid_mode',
 				/* translators: %s: mode value */
-				sprintf( __( 'Invalid refresh mode: %s. Use date_only, context, or rewrite.', 'curator-ai' ), $mode )
+				sprintf( __( 'Invalid refresh mode: %s. Use date_only, context, or rewrite.', 'curator-ai-seo-site-care' ), $mode )
 			);
 		}
 
@@ -100,7 +100,7 @@ class CURAI_Ability_Refresh_Content {
 	private static function refresh_date_only( WP_Post $post ): array {
 		return array(
 			'updated_content' => $post->post_content,
-			'diff_summary'    => __( 'Modified date refreshed to current time. Content unchanged.', 'curator-ai' ),
+			'diff_summary'    => __( 'Modified date refreshed to current time. Content unchanged.', 'curator-ai-seo-site-care' ),
 			'mode'            => 'date_only',
 			'tokens_used'     => 0,
 		);
@@ -117,11 +117,11 @@ class CURAI_Ability_Refresh_Content {
 	private static function diff_summary( string $original, string $updated ): string {
 		$delta = strlen( $updated ) - strlen( $original );
 		if ( 0 === $delta ) {
-			return __( 'Content rewritten with same length.', 'curator-ai' );
+			return __( 'Content rewritten with same length.', 'curator-ai-seo-site-care' );
 		}
 		return sprintf(
 			/* translators: %d: signed delta in characters */
-			__( 'Content updated (%+d characters).', 'curator-ai' ),
+			__( 'Content updated (%+d characters).', 'curator-ai-seo-site-care' ),
 			$delta
 		);
 	}

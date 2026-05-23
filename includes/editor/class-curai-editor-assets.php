@@ -56,7 +56,7 @@ final class CURAI_Editor_Assets {
 		);
 
 		if ( function_exists( 'wp_set_script_translations' ) ) {
-			wp_set_script_translations( 'curai-sidebar', 'curator-ai' );
+			wp_set_script_translations( 'curai-sidebar', 'curator-ai-seo-site-care' );
 		}
 	}
 }

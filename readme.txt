@@ -1,4 +1,4 @@
-=== Curator AI ===
+=== Curator AI — SEO & Site Care ===
 Contributors: sungraizfaryad
 Tags: ai, seo, content, audit, accessibility
 Requires at least: 7.0

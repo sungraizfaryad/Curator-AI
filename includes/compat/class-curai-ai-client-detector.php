@@ -82,7 +82,7 @@ class CURAI_AI_Client_Detector {
 	 */
 	public static function render_missing_notice(): void {
 		$screen = function_exists( 'get_current_screen' ) ? get_current_screen() : null;
-		if ( $screen && false === strpos( (string) $screen->id, 'curator-ai' ) ) {
+		if ( $screen && false === strpos( (string) $screen->id, 'curator-ai-seo-site-care' ) ) {
 			return;
 		}
 
@@ -98,18 +98,18 @@ class CURAI_AI_Client_Detector {
 			);
 			$message     = sprintf(
 				/* translators: %s: install plugin URL. */
-				__( 'Curator AI requires the official WordPress <strong>AI</strong> plugin. <a href="%s">Install it now</a>. Audit features still work; AI generation is disabled.', 'curator-ai' ),
+				__( 'Curator AI requires the official WordPress <strong>AI</strong> plugin. <a href="%s">Install it now</a>. Audit features still work; AI generation is disabled.', 'curator-ai-seo-site-care' ),
 				esc_url( $install_url )
 			);
 		} elseif ( ! $status['provider_configured'] ) {
 			$settings_url = self_admin_url( 'options-connectors.php' );
 			$message      = sprintf(
 				/* translators: %s: connectors settings URL. */
-				__( 'Curator AI: AI plugin is active but no provider is configured. <a href="%s">Add a provider in Settings → Connectors</a>. Audit features still work; AI generation is disabled.', 'curator-ai' ),
+				__( 'Curator AI: AI plugin is active but no provider is configured. <a href="%s">Add a provider in Settings → Connectors</a>. Audit features still work; AI generation is disabled.', 'curator-ai-seo-site-care' ),
 				esc_url( $settings_url )
 			);
 		} else {
-			$message = __( 'Curator AI: AI client is not available. Audit features still work; AI generation is disabled.', 'curator-ai' );
+			$message = __( 'Curator AI: AI client is not available. Audit features still work; AI generation is disabled.', 'curator-ai-seo-site-care' );
 		}
 
 		printf(

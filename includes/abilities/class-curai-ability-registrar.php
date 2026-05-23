@@ -65,24 +65,24 @@ class CURAI_Ability_Registrar {
 		wp_register_ability_category(
 			'seo',
 			array(
-				'label'       => __( 'SEO', 'curator-ai' ),
-				'description' => __( 'SEO meta and alt text generation abilities.', 'curator-ai' ),
+				'label'       => __( 'SEO', 'curator-ai-seo-site-care' ),
+				'description' => __( 'SEO meta and alt text generation abilities.', 'curator-ai-seo-site-care' ),
 			)
 		);
 
 		wp_register_ability_category(
 			'freshness',
 			array(
-				'label'       => __( 'Content Freshness', 'curator-ai' ),
-				'description' => __( 'Detect stale content and refresh dates or rewrite outdated content.', 'curator-ai' ),
+				'label'       => __( 'Content Freshness', 'curator-ai-seo-site-care' ),
+				'description' => __( 'Detect stale content and refresh dates or rewrite outdated content.', 'curator-ai-seo-site-care' ),
 			)
 		);
 
 		wp_register_ability_category(
 			'audit',
 			array(
-				'label'       => __( 'Site Audit', 'curator-ai' ),
-				'description' => __( 'Readability, missing meta, broken links, thin content and performance audits.', 'curator-ai' ),
+				'label'       => __( 'Site Audit', 'curator-ai-seo-site-care' ),
+				'description' => __( 'Readability, missing meta, broken links, thin content and performance audits.', 'curator-ai-seo-site-care' ),
 			)
 		);
 	}
@@ -120,8 +120,8 @@ class CURAI_Ability_Registrar {
 		wp_register_ability(
 			'curator-ai/audit-stale',
 			array(
-				'label'               => __( 'Audit Stale Posts', 'curator-ai' ),
-				'description'         => __( 'Finds published posts older than N months since last modification.', 'curator-ai' ),
+				'label'               => __( 'Audit Stale Posts', 'curator-ai-seo-site-care' ),
+				'description'         => __( 'Finds published posts older than N months since last modification.', 'curator-ai-seo-site-care' ),
 				'category'            => 'audit',
 				'input_schema'        => array(
 					'type'                 => 'object',
@@ -179,8 +179,8 @@ class CURAI_Ability_Registrar {
 		wp_register_ability(
 			'curator-ai/audit-readability',
 			array(
-				'label'               => __( 'Audit Readability', 'curator-ai' ),
-				'description'         => __( 'Computes Flesch-Kincaid readability metrics for a single post.', 'curator-ai' ),
+				'label'               => __( 'Audit Readability', 'curator-ai-seo-site-care' ),
+				'description'         => __( 'Computes Flesch-Kincaid readability metrics for a single post.', 'curator-ai-seo-site-care' ),
 				'category'            => 'audit',
 				'input_schema'        => array(
 					'type'                 => 'object',
@@ -232,8 +232,8 @@ class CURAI_Ability_Registrar {
 		wp_register_ability(
 			'curator-ai/audit-missing-meta-alt',
 			array(
-				'label'               => __( 'Audit Missing Meta & Alt', 'curator-ai' ),
-				'description'         => __( 'Finds posts missing meta title/description and images missing alt text.', 'curator-ai' ),
+				'label'               => __( 'Audit Missing Meta & Alt', 'curator-ai-seo-site-care' ),
+				'description'         => __( 'Finds posts missing meta title/description and images missing alt text.', 'curator-ai-seo-site-care' ),
 				'category'            => 'audit',
 				'input_schema'        => array(
 					'type'                 => 'object',
@@ -287,8 +287,8 @@ class CURAI_Ability_Registrar {
 		wp_register_ability(
 			'curator-ai/audit-thin-content',
 			array(
-				'label'               => __( 'Audit Thin Content', 'curator-ai' ),
-				'description'         => __( 'Flags posts with fewer than N words of plain-text content.', 'curator-ai' ),
+				'label'               => __( 'Audit Thin Content', 'curator-ai-seo-site-care' ),
+				'description'         => __( 'Flags posts with fewer than N words of plain-text content.', 'curator-ai-seo-site-care' ),
 				'category'            => 'audit',
 				'input_schema'        => array(
 					'type'                 => 'object',
@@ -346,8 +346,8 @@ class CURAI_Ability_Registrar {
 		wp_register_ability(
 			'curator-ai/audit-broken-links',
 			array(
-				'label'               => __( 'Audit Broken Links', 'curator-ai' ),
-				'description'         => __( 'HEAD-checks external links inside a single post (full-site async in Phase 6).', 'curator-ai' ),
+				'label'               => __( 'Audit Broken Links', 'curator-ai-seo-site-care' ),
+				'description'         => __( 'HEAD-checks external links inside a single post (full-site async in Phase 6).', 'curator-ai-seo-site-care' ),
 				'category'            => 'audit',
 				'input_schema'        => array(
 					'type'                 => 'object',
@@ -396,8 +396,8 @@ class CURAI_Ability_Registrar {
 		wp_register_ability(
 			'curator-ai/audit-perf',
 			array(
-				'label'               => __( 'Audit Performance', 'curator-ai' ),
-				'description'         => __( 'Runs Google PageSpeed Insights on a URL and returns Core Web Vitals.', 'curator-ai' ),
+				'label'               => __( 'Audit Performance', 'curator-ai-seo-site-care' ),
+				'description'         => __( 'Runs Google PageSpeed Insights on a URL and returns Core Web Vitals.', 'curator-ai-seo-site-care' ),
 				'category'            => 'audit',
 				'input_schema'        => array(
 					'type'                 => 'object',
@@ -454,8 +454,8 @@ class CURAI_Ability_Registrar {
 		wp_register_ability(
 			'curator-ai/generate-meta-description',
 			array(
-				'label'               => __( 'Generate Meta Description', 'curator-ai' ),
-				'description'         => __( 'Generates an SEO-optimized meta description for a post via the configured AI provider.', 'curator-ai' ),
+				'label'               => __( 'Generate Meta Description', 'curator-ai-seo-site-care' ),
+				'description'         => __( 'Generates an SEO-optimized meta description for a post via the configured AI provider.', 'curator-ai-seo-site-care' ),
 				'category'            => 'seo',
 				'input_schema'        => array(
 					'type'                 => 'object',
@@ -511,8 +511,8 @@ class CURAI_Ability_Registrar {
 		wp_register_ability(
 			'curator-ai/generate-alt-text',
 			array(
-				'label'               => __( 'Generate Alt Text', 'curator-ai' ),
-				'description'         => __( 'Generates accessible alt text for an image attachment via a vision-capable AI provider.', 'curator-ai' ),
+				'label'               => __( 'Generate Alt Text', 'curator-ai-seo-site-care' ),
+				'description'         => __( 'Generates accessible alt text for an image attachment via a vision-capable AI provider.', 'curator-ai-seo-site-care' ),
 				'category'            => 'seo',
 				'input_schema'        => array(
 					'type'                 => 'object',
@@ -565,8 +565,8 @@ class CURAI_Ability_Registrar {
 		wp_register_ability(
 			'curator-ai/refresh-content',
 			array(
-				'label'               => __( 'Refresh Content', 'curator-ai' ),
-				'description'         => __( 'Refreshes a post (date_only, context, or full rewrite) via the configured AI provider.', 'curator-ai' ),
+				'label'               => __( 'Refresh Content', 'curator-ai-seo-site-care' ),
+				'description'         => __( 'Refreshes a post (date_only, context, or full rewrite) via the configured AI provider.', 'curator-ai-seo-site-care' ),
 				'category'            => 'freshness',
 				'input_schema'        => array(
 					'type'                 => 'object',
@@ -619,8 +619,8 @@ class CURAI_Ability_Registrar {
 		wp_register_ability(
 			'curator-ai/generate-meta-title',
 			array(
-				'label'               => __( 'Generate Meta Title', 'curator-ai' ),
-				'description'         => __( 'Generates an SEO-optimized meta title for a post via the configured AI provider.', 'curator-ai' ),
+				'label'               => __( 'Generate Meta Title', 'curator-ai-seo-site-care' ),
+				'description'         => __( 'Generates an SEO-optimized meta title for a post via the configured AI provider.', 'curator-ai-seo-site-care' ),
 				'category'            => 'seo',
 				'input_schema'        => array(
 					'type'                 => 'object',

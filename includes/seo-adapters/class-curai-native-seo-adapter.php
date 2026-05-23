@@ -60,7 +60,7 @@ final class CURAI_Native_SEO_Adapter implements CURAI_SEO_Adapter_Interface {
 	 * @return string
 	 */
 	public function get_label(): string {
-		return __( 'Native (Curator AI)', 'curator-ai' );
+		return __( 'Native (Curator AI)', 'curator-ai-seo-site-care' );
 	}
 
 	/**
