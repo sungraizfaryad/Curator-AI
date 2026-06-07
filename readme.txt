@@ -8,53 +8,83 @@ Stable tag: 1.0.0
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-AI-powered site care: SEO meta + alt text generation, content freshness, site audits. Native WP 7.0 AI Client.
+Keep your WordPress site healthy with SEO writing help, content freshness checks, and quality audits, all in one place.
 
 == Description ==
 
-Curator AI is an AI-powered site care plugin that helps WordPress administrators maintain SEO health, refresh stale content, and audit site quality. It integrates with the WordPress 7.0 AI Client + Abilities API, so any AI provider you configure in Settings → Connectors works automatically.
+Curator AI is a free plugin that helps you take care of your WordPress site without turning it into a second job. It writes the small bits of SEO text that matter, points out posts that have gone stale, and runs quality checks so you can fix problems before your visitors (or Google) notice them.
 
-**Three pillars:**
+It is built for the person who runs the site, not just the developer who set it up. If you have ever looked at a post and wondered whether the headline Google shows is any good, whether your older articles are quietly aging, or whether any of your images are missing their descriptions, this plugin does that looking for you and tells you plainly what it found.
 
-* **SEO optimization** — generate meta titles, meta descriptions, and image alt text; sync to Yoast SEO or Rank Math
-* **Content freshness** — detect stale posts and refresh dates or rewrite outdated content
-* **Site health audit** — readability scoring, missing meta/alt detection, broken link checks, thin content flags, Lighthouse-style perf via PageSpeed Insights
+You work with it in two places. Right inside the post editor there is a "Curator AI" sidebar where you can generate a meta title or meta description, score a post's readability, refresh a stale post, or scan it for broken links. And there is a dashboard under "Curator AI" in your admin area with five simple screens: Overview, Automation, Audit Reports, Bulk Operations, and Settings.
 
-All AI calls route through `wp_ai_client_prompt()`. The plugin never stores or transmits its own API keys.
+Here is what it can do, in three groups.
+
+**SEO writing help**
+
+* Write a meta title, the clickable headline that shows up in Google search results.
+* Write a meta description, the short summary that sits under that title in Google.
+* Write alt text for an image, the description that helps screen readers and search engines understand the picture.
+* If you use Yoast SEO or Rank Math (two popular SEO plugins), it writes these straight into them. If you use neither, it just stores them for you.
+
+**Keeping content fresh**
+
+* Find stale posts, the ones you have not touched in a long time.
+* Refresh a post by simply updating its date, or by rewriting the parts that have gone out of date.
+
+**Site health checks** (these run on your own server, no outside help needed)
+
+* Give a post a readability score so you know how easy it is to read.
+* Find posts that are missing a meta title or meta description.
+* Find images that have no alt text.
+* Find thin content, meaning posts that are too short to be useful.
+* Check a post for broken links.
+* Measure page speed and Core Web Vitals, which are Google's measures of how fast and steady a page feels, using Google PageSpeed Insights. This one is optional and sends the page address to Google to run the test.
+
+A quick, honest note on what needs help from elsewhere. The four AI writing jobs (the three SEO text features plus rewriting a stale post) need the free official "AI" plugin from WordPress.org. That separate plugin is where you connect your provider, such as OpenAI, Anthropic, or Google, and where your API key lives. Curator AI never holds or touches your API key. Everything else, including all the audits and the simple date refresh, works fine without the AI plugin.
+
+On privacy, plainly: Curator AI holds no API keys. The AI writing features send your post content to whatever provider you set up in the AI plugin, and that only happens when you click a button to ask for it. The optional page speed check sends the page address to Google. Every other audit runs on your own server and sends nothing out.
+
+One more thing worth knowing. The automation rules, which can run tasks when you save a post or on a schedule, are all turned off when you install. Nothing runs on its own until you decide to switch it on.
+
+This plugin needs WordPress 7.0 or newer and PHP 8.1 or newer.
 
 == External services ==
 
-* WordPress AI Client — relays prompts to your configured provider (OpenAI, Anthropic, Google, etc.). Post content is sent to that provider when you trigger AI features.
-* Google PageSpeed Insights API (optional) — used by the perf audit to measure Core Web Vitals.
+This plugin can connect to two outside services, and only when you choose to use the features that need them.
+
+* WordPress AI Client. The AI writing features pass your prompt and the relevant post content to the AI provider you set up in the official "AI" plugin (for example OpenAI, Anthropic, or Google). This happens only when you trigger an AI feature. Curator AI does not store or send any API key of its own.
+* Google PageSpeed Insights. The optional page speed audit sends the address of the page you are testing to Google so Google can measure how fast it loads. No post content is sent.
 
 == Installation ==
 
-1. Install and activate the WordPress AI Client plugin, then configure a provider in Settings → Connectors.
-2. Install Curator AI.
-3. Visit Curator AI → Overview to verify status.
-4. Enable any automation rules at Curator AI → Automation (all rules are OFF by default).
+1. Install and activate Curator AI from the Plugins screen in your WordPress admin.
+2. Open any post and look for the "Curator AI" sidebar to try the audits and SEO tools right away.
+3. If you want the AI writing features, install the free "AI" plugin by WordPress.org, then open it and connect your provider and API key. Curator AI will use that connection automatically.
+4. Visit the "Curator AI" menu in your admin area to see the full dashboard.
+5. To have tasks run automatically, open the Automation screen and turn on the rules you want. Every rule is off by default.
 
 == Frequently Asked Questions ==
 
-= Do I need to provide an API key? =
+= Do I need an API key? =
 
-No. All AI calls go through the WordPress AI Client plugin. You configure the provider once in Settings → Connectors, and Curator AI uses whatever model is configured there.
+Not for Curator AI itself, and it never stores one. The AI writing features use the separate free "AI" plugin, and that is where you add your provider and key.
 
-= Does it work without Yoast or Rank Math? =
+= Will this work if I do not use Yoast or Rank Math? =
 
-Yes. A native fallback adapter stores meta titles and descriptions in plugin-owned post meta keys. If you later activate Yoast or Rank Math, the adapter switches automatically, or you can pin a choice in Settings.
+Yes. If you have Yoast or Rank Math, Curator AI writes the SEO text straight into them. If you do not, it simply stores the text itself.
 
-= Is anything sent to a third party? =
+= Does any of my content get sent somewhere? =
 
-Only what you trigger. AI calls send post content to your configured AI provider through the WordPress AI Client. The optional performance audit sends the page URL to Google PageSpeed Insights. Audits that score readability, count words, or check links run locally.
+Only when you ask for an AI writing feature. Then your post content goes to the provider you set up in the AI plugin. The optional page speed check sends the page address to Google. Everything else stays on your own server.
 
-= What about background jobs? =
+= Is it safe to install? Will it change my site on its own? =
 
-v1 uses WordPress native cron. A future release will bundle Action Scheduler for higher reliability on low-traffic sites. The `curai_scheduler` filter lets you swap in your own scheduler today.
+Yes, it is safe, and no, it will not act on its own. Every automation rule is off until you turn it on, so nothing happens until you choose to make it happen.
 
-= How do I add support for AIOSEO or SEOPress? =
+= Can I use it without any AI at all? =
 
-Implement `CURAI_SEO_Adapter_Interface` and append your adapter via the `curai_seo_adapters` filter.
+Absolutely. The site health checks and the stale-post finder work with no AI plugin and no provider. You only need the AI plugin if you want Curator AI to write text or rewrite a post for you.
 
 == Changelog ==
 
@@ -62,7 +92,7 @@ Implement `CURAI_SEO_Adapter_Interface` and append your adapter via the `curai_s
 * Initial release.
 * 10 registered abilities: generate-meta-title, generate-meta-description, generate-alt-text, refresh-content, audit-stale, audit-readability, audit-missing-meta-alt, audit-thin-content, audit-broken-links, audit-perf.
 * SEO adapters for Yoast SEO, Rank Math, plus a native fallback.
-* Automation engine with hook-based and scheduled rule support (all OFF by default).
-* REST API under `curator-ai/v1`.
+* Automation engine with hook-based and scheduled rule support (all off by default).
+* REST API under curator-ai/v1.
 * Gutenberg sidebar with SEO, Readability, Freshness, and Broken Links panels.
 * Admin dashboard with Overview, Automation, Audit Reports, Bulk Operations, and Settings views.
