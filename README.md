@@ -8,6 +8,8 @@ Keep your WordPress site healthy without the busywork.
 [![Version 1.0.0](https://img.shields.io/badge/Version-1.0.0-green.svg)](https://github.com/sungraizfaryad/Curator-AI)
 [![WordPress.org plugin](https://img.shields.io/badge/WordPress.org-Plugin%20Page-0073aa.svg)](https://wordpress.org/plugins/curator-ai-seo-site-care/)
 
+> **This is a published WordPress plugin.** You can install it straight from your WordPress dashboard (Plugins, Add New, search "Curator AI"), or get it from the directory: **[wordpress.org/plugins/curator-ai-seo-site-care](https://wordpress.org/plugins/curator-ai-seo-site-care/)**. This repository holds the source code; most people will just install it from WordPress.org.
+
 ## 🌱 What this is
 
 Keeping a WordPress site healthy is a lot of small chores. You have to write the headline Google shows, the little summary under it, and a description for every image. Old posts go stale. Links rot. Some posts end up too short to rank. None of it is hard on its own, but it piles up, and it is easy to let it slide.

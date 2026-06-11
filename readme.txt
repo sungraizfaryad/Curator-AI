@@ -86,6 +86,15 @@ Yes, it is safe, and no, it will not act on its own. Every automation rule is of
 
 Absolutely. The site health checks and the stale-post finder work with no AI plugin and no provider. You only need the AI plugin if you want Curator AI to write text or rewrite a post for you.
 
+== Screenshots ==
+
+1. The Overview dashboard: setup status, audit findings, token usage, and recent results at a glance.
+2. The Curator AI sidebar inside the post editor: generate SEO meta, score readability, refresh content, and scan for broken links without leaving the post.
+3. Audit Reports: readability, missing meta, thin content, broken links, and performance findings collected in one place.
+4. Bulk Operations: run any site-wide audit with a single click.
+5. Automation rules: run tasks when you save a post or on a schedule. Every rule is off until you turn it on.
+6. Settings: choose your SEO adapter, set a monthly budget cap, and add an optional PageSpeed Insights API key.
+
 == Changelog ==
 
 = 1.0.0 =
